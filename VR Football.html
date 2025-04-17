@@ -1,0 +1,84 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>VR Football</title>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@6.1.1/dist/aframe-extras.loaders.min.js"></script>
+  </head>
+  <body>
+    <a-scene 
+      background="color: #87CEEB" 
+
+      <!-- Preload semua resource -->
+      <a-assets timeout="10000">
+        <audio id="stadium-ambience" src="sounds/stadium-ambience.mp3"></audio>
+        <audio id="cheer-sound" src="sounds/cheer.mp3"></audio>
+
+        <a-asset-item id="field" src="models/field.glb"></a-asset-item>
+        <a-asset-item id="goal" src="models/goal.glb"></a-asset-item>
+        <a-asset-item id="bench" src="models/bench.glb"></a-asset-item>
+        <a-asset-item id="ball" src="models/ball.glb"></a-asset-item>
+        <a-asset-item id="mascot" src="models/mascot.glb"></a-asset-item>
+        
+      </a-assets>
+
+      <!-- Pencahayaan -->
+      <a-light type="ambient" color="#ffffff"></a-light>
+      <a-light type="directional" color="#ffffff" intensity="0.8" position="1 3 1"></a-light>
+
+      <!-- Suara ambient -->
+      <a-sound src="#stadium-ambience" autoplay="true" loop="true" position="0 2 0"></a-sound>
+
+      <!-- Lapangan -->
+      <a-entity gltf-model="models/field.glb" position="" scale="0.85 0.01 0.52">
+      </a-entity>
+
+      <!-- Gawang kiri -->
+      <a-entity gltf-model="models/goal.glb" position="3.77762 0.13776 12.77948" scale="-0.015 0.01 0.011" rotation="0 -0.38 0">
+      </a-entity>
+
+      <!-- Gawang kanan -->
+      <a-entity gltf-model="models/goal.glb" position="-3.6278 0.10127 -12.69979" scale="-0.015 0.01 0.011" rotation="0 180 0" id="gawang kanan">
+      </a-entity>
+
+      <!-- Kursi Pemain -->
+      <a-entity gltf-model="models/bench.glb" position="13.50428 -0.21823 2.89361" scale="0.04543 0.04 0.034" id="bench">
+      </a-entity>
+
+      <!-- Bola dengan animasi rotasi -->
+      <a-entity id="ball" gltf-model="models/ball.glb" position="-3.60502 1.59148 11.89702" scale="0.00759 0.00759 0.00754" animation="property: rotation; to: 0 360 0; loop: true; dur: 3000" rotation="0 95.5168554789915 0" visible="">
+      </a-entity>
+
+      <!-- Maskot interaktif -->
+      <a-entity 
+      id="mascot" 
+      class="clickable"
+      gltf-model="models/mascot.glb" 
+      position="11.33808 0 -12.61721" 
+      scale="1.2 1.2 1.2" 
+      sound="on: click; src: sounds/cheer.mp3" 
+      animation__click="property: position; to: 11.33808 1 -12.61721; dur: 500; startEvents: click">
+    </a-entity>
+    
+
+      <!-- Kamera -->
+      <a-entity 
+      id="cameraRig"
+      camera 
+      look-controls 
+      wasd-controls 
+      position="0 1.6 2">
+    
+      <a-entity 
+        cursor="fuse: false; rayOrigin: mouse"
+        raycaster="objects: .clickable"
+        position="0 0 -1" 
+        geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.015"
+        material="color: black; shader: flat">
+      </a-entity>
+    
+    </a-entity>
+
+    </a-scene>
+  </body>
+</html>
